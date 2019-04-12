@@ -7,3 +7,5 @@ include 'spring-cloud:spring-cloud-bus'
 include 'spring-cloud:spring-cloud-config'
 include 'spring-cloud:spring-cloud-config-client'
 include 'spring-cloud:spring-cloud-sleuth'
+
+include 'spring-swagger'
