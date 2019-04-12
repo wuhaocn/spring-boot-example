@@ -29,10 +29,23 @@ github示例:[spring-swagger示例](https://github.com/coral-learning/spring-boo
 #### 使用示例
     
     1.添加依赖
- 
-        compile group: 'io.springfox', name: 'springfox-swagger-ui', version:'2.7.0'
-        compile group: 'io.springfox', name: 'springfox-swagger2', version:'2.7.0'
+    //jar的版本号比较重要，详情请参考github，在文章开头
+    dependencies {
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springboot_version
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springboot_version
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springboot_version
+    
+        compile group: 'io.springfox', name: 'springfox-swagger-ui', version: swagger_version
+        compile group: 'io.springfox', name: 'springfox-swagger2', version: swagger_version
         
+        testCompile group: 'io.github.swagger2markup', name: 'swagger2markup', version: '1.3.3'
+        testCompile group: 'io.springfox', name: 'springfox-staticdocs', version: '2.0.1'
+        testCompile group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.2.RELEASE'
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springboot_version
+    
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+    }
+
     2.创建Swagger2配置类
         在Application.java同级创建Swagger2的配置类Swagger2
         通过createRestApi函数创建Docket的Bean之后，apiInfo()用来创建该Api的基本信息（这些基本信息会展现在文档页面中）。
@@ -119,6 +132,7 @@ github示例:[spring-swagger示例](https://github.com/coral-learning/spring-boo
             true | false
             value：说明参数的意思
             defaultValue：参数的默认值
+            
     4.spring-boot control使用示例
         @Controller
         @RequestMapping("/sgc")
@@ -166,4 +180,37 @@ github示例:[spring-swagger示例](https://github.com/coral-learning/spring-boo
         }
         
     5.结果查看
+      文档接口
       http://localhost:8131/swagger-ui.html
+      json
+      http://localhost:8131/v2/api-docs
+    
+    6.markdown生成
+    
+      public static String url = "http://localhost:8131/v2/api-docs";
+      
+      public String getPath(String path){
+          return  "./doc/" + path;
+      }
+  
+  
+      /**
+       * 生成Markdown格式文档,并汇总成一个文件
+       * @throws Exception
+       */
+      @Test
+      public void generateMarkdownDocsToFile() throws Exception {
+          //    输出Markdown到单文件
+          Swagger2MarkupConfig config = new Swagger2MarkupConfigBuilder()
+                  .withMarkupLanguage(MarkupLanguage.MARKDOWN)
+                  .withOutputLanguage(Language.ZH)
+                  .withPathsGroupedBy(GroupBy.TAGS)
+                  .withGeneratedExamples()
+                  .withoutInlineSchema()
+                  .build();
+  
+          Swagger2MarkupConverter.from(new URL(url))
+                  .withConfig(config)
+                  .build()
+                  .toFile(Paths.get(getPath("markdown/generated/api")));
+      }

@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-public class Swagger2 {
+public class Swagger2Config {
     
     /**
      * 创建API应用
@@ -46,10 +46,10 @@ public class Swagger2 {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Spring Boot中使用Swagger2构建RESTful APIs")
-                .description("更多请关注http://www.baidu.com")
-                .termsOfServiceUrl("http://www.baidu.com")
-                .contact("wuhao")
+                .title("Spring-Boot中使用Swagger2构建api文档")
+                .description("更多请关注https://github.com/coral-learning/spring-boot-example.git")
+                .termsOfServiceUrl("https://github.com/coral-learning/spring-boot-example.git")
+                .contact("coral")
                 .version("1.0")
                 .build();
     }
