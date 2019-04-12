@@ -1,0 +1,40 @@
+buildscript {
+    ext {
+        springBootVersion = springBoot_Version
+    }
+
+    repositories {
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'spring'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka', version: '2.0.0.M1'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka-server', version: '2.0.0.M1'
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

@@ -1,0 +1,46 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.M1'
+    }
+
+    repositories {
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'spring'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    // http://mvnrepository.com/artifact/io.zipkin.java
+    // https://mvnrepository.com/artifact/io.zipkin.java/zipkin-server
+    compile group: 'io.zipkin.java', name: 'zipkin-server', version: '2.0.1'
+    // https://mvnrepository.com/artifact/io.zipkin.java/zipkin-autoconfigure-ui
+    compile group: 'io.zipkin.java', name: 'zipkin-autoconfigure-ui', version: '2.0.1'
+    compile group: 'io.zipkin.java', name: 'zipkin-autoconfigure-ui', version: '2.0.1'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka', version: "${springBootVersion}"
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka-server', version: "${springBootVersion}"
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
