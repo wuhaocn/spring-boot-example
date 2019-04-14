@@ -1,4 +1,4 @@
-package com.sf.spring.cloud.starter;
+package com.coral.spring.boot.starter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -7,14 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@EnableAutoConfiguration
 @SpringBootApplication
-public class StarterApplication {
+public class DockerApplication {
 	@RequestMapping("/doIndex")
 	public String doIndex() {
 		return "doIndex";
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(StarterApplication.class, args);
+		SpringApplication.run(DockerApplication.class, args);
 	}
 }

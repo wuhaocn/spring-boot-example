@@ -8,7 +8,7 @@ rootProject.name = 'spring-boot-example'
 //include 'spring-cloud:spring-cloud-config-client'
 //include 'spring-cloud:spring-cloud-sleuth'
 
-include 'spring-boot:spring-boot-starter'
+include 'spring-boot:spring-boot-docker'
 include 'spring-boot:spring-boot-starter'
 
 include 'spring-swagger'
