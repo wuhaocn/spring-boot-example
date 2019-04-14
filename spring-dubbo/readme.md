@@ -64,6 +64,8 @@
             @ResponseBody
             public MessageResponse doTest(){
                 MessageRequest messageRequest = new MessageRequest();
+                messageRequest.setTid(UUID.randomUUID().toString());
+                System.out.println("call send");
                 MessageResponse messageResponse = messageService.send(messageRequest);
                 return messageResponse;
             }
