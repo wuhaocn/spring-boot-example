@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+        mavenCentral()
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'docker'
+
+
+jar {
+    baseName = project.name
+    version = version
+}
+
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = true
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
+}
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springboot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springboot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springboot_version
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springboot_version
+
+}

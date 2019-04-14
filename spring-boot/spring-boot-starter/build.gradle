@@ -1,0 +1,8 @@
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springboot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springboot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springboot_version
+    
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springboot_version
+    
+}
