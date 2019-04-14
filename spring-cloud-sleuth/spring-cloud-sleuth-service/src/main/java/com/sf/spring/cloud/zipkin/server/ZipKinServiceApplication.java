@@ -3,7 +3,6 @@ package com.sf.spring.cloud.zipkin.server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +15,7 @@ import java.util.Properties;
 
 @SpringBootApplication
 @RestController
-public class ZipKinInvokingApplication {
+public class ZipKinServiceApplication {
     @Autowired
     private RestTemplate restTemplate;
 
@@ -27,24 +26,24 @@ public class ZipKinInvokingApplication {
 
     @RequestMapping("/send")
     public String send(){
-        return restTemplate.getForObject("http://localhost:8191/send", String.class);
+        return restTemplate.getForObject("http://localhost:8192/receiver", String.class);
     }
     @RequestMapping("/receiver")
     public String receiver(){
-        return restTemplate.getForObject("http://localhost:8191/receiver", String.class);
+        return "All Is End";
 
     }
 
-    @Bean
-    public AlwaysSampler defaultSampler(){
-        return new AlwaysSampler();
-    }
+//    @Bean
+//    public AlwaysSampler defaultSampler(){
+//        return new AlwaysSampler();
+//    }
 
     public static void main(String[] args) throws IOException {
         Properties configProperties = new Properties();
-        InputStream config = ZipKinInvokingApplication.class.getClassLoader().getResourceAsStream("application-zipkin-invoking.properties");
+        InputStream config = ZipKinServiceApplication.class.getClassLoader().getResourceAsStream("application-zipkin-service.properties");
         configProperties.load(config);
-        SpringApplication springApplication = new SpringApplication(ZipKinInvokingApplication.class);
+        SpringApplication springApplication = new SpringApplication(ZipKinServiceApplication.class);
         springApplication.setDefaultProperties(configProperties);
         springApplication.run(args);
     }

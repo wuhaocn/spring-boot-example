@@ -11,6 +11,10 @@ rootProject.name = 'spring-boot-example'
 include 'spring-boot:spring-boot-docker'
 include 'spring-boot:spring-boot-starter'
 
+include 'spring-cloud-sleuth:spring-cloud-sleuth-invoking'
+include 'spring-cloud-sleuth:spring-cloud-sleuth-server'
+include 'spring-cloud-sleuth:spring-cloud-sleuth-service'
+
 include 'spring-swagger'
 
 include 'spring-dubbo:spring-dubbo-api'
