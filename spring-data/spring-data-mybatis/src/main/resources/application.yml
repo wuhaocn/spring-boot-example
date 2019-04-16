@@ -1,0 +1,14 @@
+server:
+  port: 8301
+
+#开发配置
+spring:
+  datasource:
+    url: jdbc:mysql://10.10.208.194:3306/example_db?useUnicode=true&characterEncoding=utf-8
+    username: root
+    # Jasypt加密 可到common-utils中找到JasyptUtil加解密工具类生成加密结果 格式为ENC(加密结果)
+    password: urcs@2018
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  typeAliasesPackage: com.coral.learning.data.mybatis.entity
+  mapperLocations: classpath:mapper/*.xml
