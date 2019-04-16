@@ -1,6 +1,16 @@
 package com.coral.learning.data.jpa.entity;
 
-public class User {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "tj_user")
+public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String userName;

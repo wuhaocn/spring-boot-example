@@ -8,15 +8,32 @@ rootProject.name = 'spring-boot-example'
 //include 'spring-cloud:spring-cloud-config-client'
 //include 'spring-cloud:spring-cloud-sleuth'
 
-include 'spring-boot:spring-boot-docker'
-include 'spring-boot:spring-boot-starter'
+////启动模块
+//include 'spring-boot:spring-boot-docker'
+//include 'spring-boot:spring-boot-starter'
 
-include 'spring-cloud-sleuth:spring-cloud-sleuth-invoking'
-include 'spring-cloud-sleuth:spring-cloud-sleuth-server'
-include 'spring-cloud-sleuth:spring-cloud-sleuth-service'
 
-include 'spring-swagger'
+//安全认证
+include 'spring-security:spring-security-shiro'
 
+//数据模块
+//include 'spring-data:spring-data-mybatis'
+include 'spring-data:spring-data-jpa'
+
+////分布式链路追踪
+//include 'spring-cloud-sleuth:spring-cloud-sleuth-invoking'
+//include 'spring-cloud-sleuth:spring-cloud-sleuth-server'
+//include 'spring-cloud-sleuth:spring-cloud-sleuth-service'
+//
+//
+////文档生成
+//include 'spring-swagger'
+
+
+//
+
+
+//spring-for-rpc
 include 'spring-dubbo:spring-dubbo-api'
 include 'spring-dubbo:spring-dubbo-provider'
 include 'spring-dubbo:spring-dubbo-consumer'

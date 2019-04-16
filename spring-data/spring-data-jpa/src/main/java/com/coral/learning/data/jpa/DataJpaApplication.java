@@ -1,14 +1,14 @@
 package com.coral.learning.data.jpa;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-
+//启用JPA审计
+@EnableJpaAuditing
 @SpringBootApplication
-@MapperScan("com.coral.learning.data.mybatis.dao")
-public class MybatisApplication{
+public class DataJpaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MybatisApplication.class,args);
+        SpringApplication.run(DataJpaApplication.class,args);
     }
 }
