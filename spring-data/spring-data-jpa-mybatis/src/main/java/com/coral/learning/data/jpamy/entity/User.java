@@ -1,6 +1,13 @@
-package com.coral.learning.data.jpa.entity;
+package com.coral.learning.data.jpamy.entity;
 
-public class User {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "tj_user")
+public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String userName;

@@ -1,5 +1,5 @@
 server:
-  port: 8301
+  port: 8303
 
 #开发配置
 spring:
@@ -9,6 +9,12 @@ spring:
     # Jasypt加密 可到common-utils中找到JasyptUtil加解密工具类生成加密结果 格式为ENC(加密结果)
     password: urcs@2018
     driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    show-sql: true
+    # 自动生成表结构
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
 mybatis:
-  typeAliasesPackage: com.coral.learning.data.mybatis.entity
+  typeAliasesPackage: com.coral.learning.data.jpamy.entity
   mapperLocations: classpath:mapper/*.xml
