@@ -18,7 +18,8 @@ include 'spring-security:spring-security-shiro'
 
 //数据模块
 //include 'spring-data:spring-data-mybatis'
-include 'spring-data:spring-data-jpa'
+//include 'spring-data:spring-data-jpa'
+//include 'spring-data:spring-data-jpa-mybatis'
 
 ////分布式链路追踪
 //include 'spring-cloud-sleuth:spring-cloud-sleuth-invoking'
