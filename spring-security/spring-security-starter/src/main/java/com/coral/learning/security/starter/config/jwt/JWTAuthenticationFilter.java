@@ -20,22 +20,24 @@ import java.io.IOException;
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, Boolean tokenRedis, Integer tokenExpireTime, StringRedisTemplate redisTemplate) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
+        log.info("JWTAuthenticationFilter authenticationManager");
     }
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationEntryPoint authenticationEntryPoint) {
         super(authenticationManager, authenticationEntryPoint);
+        log.info("JWTAuthenticationFilter authenticationManager, authenticationEntryPoint");
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+        log.info("JWTAuthenticationFilter doFilterInternal");
         chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(String header, HttpServletResponse response) {
-
+        log.info("JWTAuthenticationFilter getAuthentication");
        return null;
     }
 }
