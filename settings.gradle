@@ -1,20 +1,12 @@
 rootProject.name = 'spring-boot-example'
-//include 'spring-cloud:spring-cloud-starter'
-//include 'spring-cloud:spring-cloud-eureka'
-//include 'spring-cloud:spring-cloud-hystrix'
-//include 'spring-cloud:spring-cloud-ribbon'
-//include 'spring-cloud:spring-cloud-bus'
-//include 'spring-cloud:spring-cloud-config'
-//include 'spring-cloud:spring-cloud-config-client'
-//include 'spring-cloud:spring-cloud-sleuth'
-
 ////启动模块
 //include 'spring-boot:spring-boot-docker'
 //include 'spring-boot:spring-boot-starter'
 
 
 //安全认证
-include 'spring-security:spring-security-shiro'
+//include 'spring-security:spring-security-shiro'
+include 'spring-security:spring-security-starter'
 
 //数据模块
 //include 'spring-data:spring-data-mybatis'
@@ -31,10 +23,7 @@ include 'spring-security:spring-security-shiro'
 //include 'spring-swagger'
 
 
-//
-
-
-//spring-for-rpc
-include 'spring-dubbo:spring-dubbo-api'
-include 'spring-dubbo:spring-dubbo-provider'
-include 'spring-dubbo:spring-dubbo-consumer'
+////spring-for-rpc
+//include 'spring-dubbo:spring-dubbo-api'
+//include 'spring-dubbo:spring-dubbo-provider'
+//include 'spring-dubbo:spring-dubbo-consumer'

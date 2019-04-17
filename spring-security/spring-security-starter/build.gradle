@@ -3,14 +3,19 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springboot_version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: springboot_version
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: springboot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: springboot_version
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: springboot_version
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: springboot_version
+    compile group: 'org.springframework.data', name: 'spring-data-redis', version: springboot_version
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.56'
+
     compile group: 'com.alibaba', name: 'druid-spring-boot-starter', version: druid_version
     compile group: 'com.alibaba', name: 'druid', version: druid_version
     compile group: 'mysql', name: 'mysql-connector-java', version: mysql_version
 
-    compile group: 'org.apache.shiro', name: 'shiro-spring', version: shiro_version
-    compile group: 'org.apache.shiro', name: 'shiro-ehcache', version: shiro_version
-    compile group: 'redis.clients', name: 'jedis', version: redis_version
-    compile group: 'com.github.theborakompanioni', name: 'thymeleaf-extras-shiro', version:'2.0.0'
+
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version:'0.9.1'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version:'2.0.8.RELEASE'
 
     compile group: 'org.projectlombok', name: 'lombok', version:'1.16.22'
