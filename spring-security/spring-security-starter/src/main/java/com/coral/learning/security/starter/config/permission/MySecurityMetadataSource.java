@@ -1,19 +1,17 @@
 package com.coral.learning.security.starter.config.permission;
 
-
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 权限资源管理器
@@ -24,13 +22,13 @@ import java.util.Map;
 @Component
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
+
     private Map<String, Collection<ConfigAttribute>> map = null;
 
     /**
      * 加载权限表中所有操作请求权限
      */
     public void loadResourceDefine(){
-
         map = new HashMap<>(16);
     }
 

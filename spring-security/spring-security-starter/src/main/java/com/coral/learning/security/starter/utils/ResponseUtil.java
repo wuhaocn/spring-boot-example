@@ -1,6 +1,7 @@
 package com.coral.learning.security.starter.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletResponse;
@@ -26,7 +27,7 @@ public class ResponseUtil {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
             out = response.getWriter();
-            out.println(JSONObject.toJSONString(resultMap));
+            out.println(new Gson().toJson(resultMap));
         } catch (Exception e) {
             log.error(e + "输出JSON出错");
         }finally{

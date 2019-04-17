@@ -1,20 +1,20 @@
 package com.coral.learning.security.starter.config;
 
 
-import com.coral.learning.security.starter.config.jwt.AuthenticationFailHandler;
-import com.coral.learning.security.starter.config.jwt.AuthenticationSuccessHandler;
-import com.coral.learning.security.starter.config.jwt.JWTAuthenticationFilter;
-import com.coral.learning.security.starter.config.jwt.RestAccessDeniedHandler;
+import com.coral.learning.security.starter.config.jwt.*;
 import com.coral.learning.security.starter.config.permission.MyFilterSecurityInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
@@ -27,12 +27,25 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${secst.token.redis}")
+    private Boolean tokenRedis;
 
+    @Value("${secst.tokenExpireTime}")
+    private Integer tokenExpireTime;
 
+    @Autowired
+    private IgnoredUrlsProperties ignoredUrlsProperties;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private AuthenticationSuccessHandler successHandler;
 
+    /**
+     * 失败处理，如计数等
+     *
+     */
     @Autowired
     private AuthenticationFailHandler failHandler;
 
@@ -45,12 +58,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(new SecurityPasswordEncoder());
+        //auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http
                 .authorizeRequests();
+
+
+        //除配置文件忽略路径其它所有请求都需经过认证和授权
+        for(String url:ignoredUrlsProperties.getUrls()){
+            registry.antMatchers(url).permitAll();
+        }
 
         registry.and()
                 //表单登录方式
@@ -87,6 +111,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //添加自定义权限过滤器
                 .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)
                 //添加JWT过滤器 除已配置的其它请求都需经过此过滤器
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), true, 1000, redisTemplate));
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), tokenRedis, tokenExpireTime, redisTemplate));
+
     }
 }
