@@ -21,7 +21,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     public SecurityUserDetails(User user) {
 
-        if(user!=null) {
+        if (user != null) {
             this.setUsername(user.getUsername());
             this.setPassword(user.getPassword());
         }
@@ -29,6 +29,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 添加用户拥有的权限和角色
+     *
      * @return
      */
     @Override
@@ -41,6 +42,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 账户是否过期
+     *
      * @return
      */
     @Override
@@ -51,6 +53,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 是否禁用
+     *
      * @return
      */
     @Override
@@ -61,6 +64,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 密码是否过期
+     *
      * @return
      */
     @Override
@@ -71,6 +75,7 @@ public class SecurityUserDetails extends User implements UserDetails {
 
     /**
      * 是否启用
+     *
      * @return
      */
     @Override

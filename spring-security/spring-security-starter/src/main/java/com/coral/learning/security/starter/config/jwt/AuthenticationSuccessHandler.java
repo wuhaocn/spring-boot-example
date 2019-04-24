@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 登录成功处理类
+ *
  * @author coral
  */
 @Slf4j
@@ -55,37 +56,37 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         //用户选择保存登录状态几天
         String saveLogin = request.getParameter(SecurityConstant.SAVE_LOGIN);
         Boolean saved = false;
-        if(StringUtils.isNotBlank(saveLogin) && Boolean.valueOf(saveLogin)){
+        if (StringUtils.isNotBlank(saveLogin) && Boolean.valueOf(saveLogin)) {
             saved = true;
-            if(!tokenRedis){
+            if (!tokenRedis) {
                 tokenExpireTime = saveLoginTime * 60 * 24;
             }
         }
-        String username = ((UserDetails)authentication.getPrincipal()).getUsername();
-        List<GrantedAuthority> authorities = (List<GrantedAuthority>) ((UserDetails)authentication.getPrincipal()).getAuthorities();
+        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        List<GrantedAuthority> authorities = (List<GrantedAuthority>) ((UserDetails) authentication.getPrincipal()).getAuthorities();
         List<String> list = new ArrayList<>();
-        for(GrantedAuthority g : authorities){
+        for (GrantedAuthority g : authorities) {
             list.add(g.getAuthority());
         }
         // 登陆成功生成token
         String token;
-        if(tokenRedis){
+        if (tokenRedis) {
             // redis
             token = UUID.randomUUID().toString().replace("-", "");
             TokenUser user = new TokenUser(username, list, saved);
             // 单点登录 之前的token失效
             String oldToken = redisTemplate.opsForValue().get(SecurityConstant.USER_TOKEN + username);
-            if(StringUtils.isNotBlank(oldToken)){
+            if (StringUtils.isNotBlank(oldToken)) {
                 redisTemplate.delete(SecurityConstant.TOKEN_PRE + oldToken);
             }
-            if(saved){
+            if (saved) {
                 redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, token, saveLoginTime, TimeUnit.DAYS);
                 redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), saveLoginTime, TimeUnit.DAYS);
-            }else{
+            } else {
                 redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, token, tokenExpireTime, TimeUnit.MINUTES);
                 redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + token, new Gson().toJson(user), tokenExpireTime, TimeUnit.MINUTES);
             }
-        }else{
+        } else {
             // jwt
             token = SecurityConstant.TOKEN_SPLIT + Jwts.builder()
                     //主题 放入用户名
@@ -99,6 +100,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
                     .compact();
         }
 
-        ResponseUtil.out(response, ResponseUtil.resultMap(true,200,"登录成功", token));
+        ResponseUtil.out(response, ResponseUtil.resultMap(true, 200, "登录成功", token));
     }
 }

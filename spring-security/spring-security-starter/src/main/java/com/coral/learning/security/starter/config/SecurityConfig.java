@@ -1,7 +1,10 @@
 package com.coral.learning.security.starter.config;
 
 
-import com.coral.learning.security.starter.config.jwt.*;
+import com.coral.learning.security.starter.config.jwt.AuthenticationFailHandler;
+import com.coral.learning.security.starter.config.jwt.AuthenticationSuccessHandler;
+import com.coral.learning.security.starter.config.jwt.JWTAuthenticationFilter;
+import com.coral.learning.security.starter.config.jwt.RestAccessDeniedHandler;
 import com.coral.learning.security.starter.config.permission.MyFilterSecurityInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +17,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * Security 核心配置类
  * 开启控制权限至Controller
+ *
  * @author coral
  */
 @Slf4j
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${secst.token.redis}")
@@ -44,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 失败处理，如计数等
-     *
      */
     @Autowired
     private AuthenticationFailHandler failHandler;
@@ -72,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         //除配置文件忽略路径其它所有请求都需经过认证和授权
-        for(String url:ignoredUrlsProperties.getUrls()){
+        for (String url : ignoredUrlsProperties.getUrls()) {
             registry.antMatchers(url).permitAll();
         }
 

@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  * @author coral
  */
 @Slf4j
-public class JWTAuthenticationFilter extends BasicAuthenticationFilter   {
+public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
     private Boolean tokenRedis;
 
@@ -56,7 +56,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter   {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         String header = request.getHeader(SecurityConstant.HEADER);
-        if(StringUtils.isBlank(header)){
+        if (StringUtils.isBlank(header)) {
             header = request.getParameter(SecurityConstant.HEADER);
         }
         Boolean notValid = StringUtils.isBlank(header) || (!tokenRedis && !header.startsWith(SecurityConstant.TOKEN_SPLIT));
@@ -68,7 +68,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter   {
         try {
             UsernamePasswordAuthenticationToken authentication = getAuthentication(header, response);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("doFilterInternal:", e);
         }
 
@@ -82,24 +82,24 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter   {
         // 权限
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if(tokenRedis){
+        if (tokenRedis) {
             // redis
             String v = redisTemplate.opsForValue().get(SecurityConstant.TOKEN_PRE + header);
-            if(StringUtils.isBlank(v)){
-                ResponseUtil.out(response, ResponseUtil.resultMap(false,401,"登录已失效，请重新登录"));
+            if (StringUtils.isBlank(v)) {
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, 401, "登录已失效，请重新登录"));
                 return null;
             }
             TokenUser user = new Gson().fromJson(v, TokenUser.class);
             username = user.getUsername();
-            for(String ga : user.getPermissions()){
+            for (String ga : user.getPermissions()) {
                 authorities.add(new SimpleGrantedAuthority(ga));
             }
-            if(!user.getSaveLogin()){
+            if (!user.getSaveLogin()) {
                 // 若未保存登录状态重新设置失效时间
                 redisTemplate.opsForValue().set(SecurityConstant.USER_TOKEN + username, header, tokenExpireTime, TimeUnit.MINUTES);
                 redisTemplate.opsForValue().set(SecurityConstant.TOKEN_PRE + header, v, tokenExpireTime, TimeUnit.MINUTES);
             }
-        }else{
+        } else {
             // JWT
             try {
                 // 解析token
@@ -113,21 +113,22 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter   {
                 //获取权限
                 String authority = claims.get(SecurityConstant.AUTHORITIES).toString();
 
-                if(StringUtils.isNotBlank(authority)){
-                    List<String> list = new Gson().fromJson(authority, new TypeToken<List<String>>(){}.getType());
-                    for(String ga : list){
+                if (StringUtils.isNotBlank(authority)) {
+                    List<String> list = new Gson().fromJson(authority, new TypeToken<List<String>>() {
+                    }.getType());
+                    for (String ga : list) {
                         authorities.add(new SimpleGrantedAuthority(ga));
                     }
                 }
             } catch (ExpiredJwtException e) {
-                ResponseUtil.out(response, ResponseUtil.resultMap(false,401,"登录已失效，请重新登录"));
-            } catch (Exception e){
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, 401, "登录已失效，请重新登录"));
+            } catch (Exception e) {
                 log.error(e.toString());
-                ResponseUtil.out(response, ResponseUtil.resultMap(false,500,"解析token错误"));
+                ResponseUtil.out(response, ResponseUtil.resultMap(false, 500, "解析token错误"));
             }
         }
 
-        if(StringUtils.isNotBlank(username)) {
+        if (StringUtils.isNotBlank(username)) {
             User principal = new User(username, "", authorities);
             return new UsernamePasswordAuthenticationToken(principal, null, authorities);
         }
