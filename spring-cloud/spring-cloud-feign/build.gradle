@@ -1,0 +1,8 @@
+dependencies {
+
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.47'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springboot_version
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-feign', version: springcloud_version
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

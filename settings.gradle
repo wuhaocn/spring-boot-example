@@ -6,17 +6,21 @@ rootProject.name = 'spring-boot-example'
 
 //安全认证
 //include 'spring-security:spring-security-shiro'
-include 'spring-security:spring-security-starter'
+//include 'spring-security:spring-security-starter'
 
 //数据模块
 //include 'spring-data:spring-data-mybatis'
 //include 'spring-data:spring-data-jpa'
 //include 'spring-data:spring-data-jpa-mybatis'
-
+//
 ////分布式链路追踪
 //include 'spring-cloud-sleuth:spring-cloud-sleuth-invoking'
 //include 'spring-cloud-sleuth:spring-cloud-sleuth-server'
 //include 'spring-cloud-sleuth:spring-cloud-sleuth-service'
+
+
+//
+include 'spring-cloud:spring-cloud-feign'
 //
 //
 ////文档生成
@@ -27,3 +31,5 @@ include 'spring-security:spring-security-starter'
 //include 'spring-dubbo:spring-dubbo-api'
 //include 'spring-dubbo:spring-dubbo-provider'
 //include 'spring-dubbo:spring-dubbo-consumer'
+
+//include 'spring-monitor:spring-boot-duid'
