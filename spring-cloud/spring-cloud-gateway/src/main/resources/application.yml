@@ -1,0 +1,16 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway # 应用名
+  cloud:
+    gateway:
+      # 路由si(集合)
+      routes:
+        # id唯一标识，(可自定义)
+        - id: user-service-route
+          # 路由服务地址
+          uri: http://127.0.0.1:8092
+          # 路由拦截地址(断言)
+          predicates:
+            - Path=/test/**

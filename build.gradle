@@ -1,55 +1,58 @@
 buildscript {
     project.ext {
+
         repoClosure = {
-            maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-            maven { url "http://repo.spring.io/milestone/" }
-            maven { url "https://repo.spring.io/snapshot/" }
-            maven { url "http://central.maven.org/maven2/" }
+            maven { url "https://repo.spring.io/snapshot" }
+            maven { url "https://repo.spring.io/milestone" }
+            mavenCentral()
             mavenLocal()
         }
+        versionTail = new Date().format('yyMMddHHmm')
     }
-    repositories repoClosure
+
+    repositories project.repoClosure
+    
 }
+
 
 allprojects { project ->
 
     project.repositories rootProject.repoClosure
-    group = 'com.coral'
-    version = '1.0.0-BETA'
-}
 
-// gradle构建对外接口依赖包时,排除下面不需要的Module,只暴露接口
-def mavenPublishIgnoreList = ['']
-
-subprojects { project ->
+    group = 'org.coral'
+    version = "3.1.0-$versionTail"
 
     apply plugin: 'java'
     apply plugin: 'maven-publish'
+
+   
+}
+
+
+subprojects {
 
     tasks.withType(JavaCompile) {
         sourceCompatibility = 1.8
         options.encoding = "UTF-8"
     }
-
     tasks.withType(Test) {
         defaultCharacterEncoding = "UTF-8"
     }
 
-
     task sourceJar(type: Jar) {
         from sourceSets.main.allJava
-        classifier = 'sources'
     }
 
-    if (!(project.name in mavenPublishIgnoreList)) {
-        publishing {
-
-            publications {
-                maven(MavenPublication) {
-                    from components.java
-                    artifact sourceJar
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact sourceJar {
+                    classifier "sources"
                 }
             }
         }
     }
 }
+
+
