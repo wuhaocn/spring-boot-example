@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: ${tenv:simple}
+  application:
+    name: spring-boot-starter

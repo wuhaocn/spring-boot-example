@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':spring-boot-multi:spring-boot-web-s1')
+    compile project(':spring-boot-multi:spring-boot-web-s2')
+    
+}

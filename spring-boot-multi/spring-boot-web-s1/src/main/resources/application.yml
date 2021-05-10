@@ -1,0 +1,9 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: spring-boot-starter
+
+  cloud:
+    gateway:
+      enabled: false

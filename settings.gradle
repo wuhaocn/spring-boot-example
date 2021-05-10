@@ -1,7 +1,8 @@
 rootProject.name = 'spring-boot-example'
+
 ////启动模块
 //include 'spring-boot:spring-boot-docker'
-include 'spring-boot:spring-boot-starter'
+//include 'spring-boot:spring-boot-starter'
 
 
 //安全认证
@@ -21,7 +22,7 @@ include 'spring-boot:spring-boot-starter'
 
 //
 //include 'spring-cloud:spring-cloud-feign'
-include 'spring-cloud:spring-cloud-gateway'
+//include 'spring-cloud:spring-cloud-gateway'
 //
 //
 ////文档生成
@@ -34,3 +35,9 @@ include 'spring-cloud:spring-cloud-gateway'
 //include 'spring-dubbo:spring-dubbo-consumer'
 
 //include 'spring-monitor:spring-boot-duid'
+
+
+//启动模块
+include 'spring-boot-multi:spring-boot-web-s1'
+include 'spring-boot-multi:spring-boot-web-s2'
+include 'spring-boot-multi:spring-boot-web-boot'
